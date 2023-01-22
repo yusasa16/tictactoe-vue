@@ -1,24 +1,26 @@
 <script setup lang="ts">
-import { ref, Ref } from 'vue'
 
 const props = defineProps({
+	value: String,
 	num: Number
 });
 
-const state: Ref<null | boolean> = ref(null);
+const emit = defineEmits(['btn-click']);
 
 function onClickBtn() {
-	state.value = true;
+	emit('btn-click', props.num);
 }
 </script>
 
 <template>
 	<button
 		type="button"
-		:aria-label="props.num + '番目のボタン'"
+		:disabled="props.value"
 		@click="onClickBtn"
 		>
-		{{ state ? '❌' : ''}}
+		<span v-if="props.value === null">null</span>
+		<span v-else-if="props.value === 'o'">まる</span>
+		<span v-else-if="props.value === 'x'">ばつ</span>
 	</button>
 </template>
 
@@ -26,5 +28,11 @@ function onClickBtn() {
 button {
 	background-color: #fff;
 	border: 0;
+	width: 100%;
+	height: 100%;
+
+	&[disabled] {
+		color: red;
+	}
 }
 </style>

@@ -1,14 +1,24 @@
 <script setup lang="ts">
+import { ref, Ref } from 'vue'
+
 const props = defineProps({
 	num: Number
-})
+});
+
+const state: Ref<null | boolean> = ref(null);
+
+function onClickBtn() {
+	state.value = true;
+}
 </script>
 
 <template>
 	<button
 		type="button"
+		:aria-label="props.num + '番目のボタン'"
+		@click="onClickBtn"
 		>
-		{{ props.num }}
+		{{ state ? '❌' : ''}}
 	</button>
 </template>
 
